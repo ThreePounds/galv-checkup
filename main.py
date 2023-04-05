@@ -1,5 +1,5 @@
 # --- imports ---
-import tkinter as tk
+
 import sqlite3
 import os.path
 
@@ -8,7 +8,7 @@ DATABASEFILE = 'examfile.db'
 
 # --- interface ---
 
-root = tk.Tk()
+
 
 # --- initialize database ---
 
@@ -32,4 +32,3 @@ else:
     con.close()
     
 # --- main event loop ---
-root.mainloop()
