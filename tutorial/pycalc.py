@@ -93,7 +93,6 @@ class PyCalc:
         self._view.setDisplayText(result)
     
     def _buildExpression(self, subExpression):
-        print(f"_buildExpression was called with arg: {subExpression!r}")
         if self._view.displayText() == ERROR_MSG:
             self._view.clearDisplay()
         expression = self._view.displayText() + subExpression
@@ -112,12 +111,11 @@ class PyCalc:
                         self._view.clearDisplay
                     )
                 else:
-                    print(f"mapping key with keySymbol: {keySymbol!r}")
                     button.clicked.connect(
                         partial(self._buildExpression, keySymbol)
                         # this doesn't work because keySymbol changes during
                         # runtime and effects the outcome of this expression,
-                        # which is evaluated every time it's run.
+                        # which is evaluated every time it's called.
                         #lambda: self._buildExpression(keySymbol)
                     )
         self._view.display.returnPressed.connect(self._calculateResult)

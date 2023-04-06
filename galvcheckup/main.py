@@ -22,9 +22,9 @@ else:
         "CREATE TABLE employee("
             "name," 
             "givenname,"
-            "id," # Lfd-Nummer
-            "archived," # 1 wenn archiviert
-            "hidden," # 1 wenn versteckt
+            "id,"
+            "archived,"
+            "hidden,"
             "birthyear,"
         ")"
     )
