@@ -6,3 +6,4 @@ venv/
 
 # Databases
 *.db
+*.sqlite

@@ -1,34 +1,20 @@
-# --- imports ---
+"""This module proves RP Contacts application"""
 
-import sqlite3
-import os.path
+import sys
 
-# --- constants ---
-DATABASEFILE = 'examfile.db'
+from PyQt6.QtWidgets import (
+    QApplication,
+)
 
-# --- interface ---
+from .views import Window
+from .database import createConnection
 
-
-
-# --- initialize database ---
-
-if os.path.isfile(DATABASEFILE):
-    pass
-else:
-    #setting up data base file
-    con = sqlite3.connect(DATABASEFILE)
-    cur = con.cursor()
-    cur.execute(
-        "CREATE TABLE employee("
-            "name," 
-            "givenname,"
-            "id,"
-            "archived,"
-            "hidden,"
-            "birthyear,"
-        ")"
-    )
-    con.commit()
-    con.close()
-    
-# --- main event loop ---
+def main():
+    """RP Contacts main function."""
+    app = QApplication(sys.argv)
+    # Connect to the database before creating any window
+    if not createConnection("contacts.sqlite"):
+        sys.exit(1)
+    win = Window()
+    win.show()
+    sys.exit(app.exec())
