@@ -16,6 +16,20 @@ class ContactsModel:
         self.model.submitAll()
         self.model.select()    
     
+    def clearContacts(self):
+        """Remove all contacts in the database."""
+        self.model.setEditStrategy(QSqlTableModel.EditStrategy.OnManualSubmit)
+        self.model.removeRows(0, self.model.rowCount())
+        self.model.submitAll()
+        self.model.setEditStrategy(QSqlTableModel.EditStrategy.OnFieldChange)
+        self.model.select()
+
+    def deleteContact(self, row):
+        """Remove a contact from the database."""
+        self.model.removeRow(row)
+        self.model.submitAll()
+        self.model.select()
+    
     @staticmethod
     def _createModel():
         """Create and set up the model."""

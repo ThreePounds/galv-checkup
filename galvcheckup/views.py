@@ -45,7 +45,9 @@ class Window(QMainWindow):
         self.addButton = QPushButton("Add...")
         self.addButton.clicked.connect(self.openAddDialog)
         self.deleteButton = QPushButton("Delete...")
+        self.deleteButton.clicked.connect(self.deleteContact)
         self.clearAllButton = QPushButton("Clear All")
+        self.clearAllButton.clicked.connect(self.clearContacts)
         # Lay out the GUI
         layout = QVBoxLayout()
         layout.addWidget(self.addButton)
@@ -55,14 +57,41 @@ class Window(QMainWindow):
         self.layout.addWidget(self.table)
         self.layout.addLayout(layout)
     
+    def clearContacts(self):
+        """Remove all contacts from the database."""
+        messageBox = QMessageBox.warning(
+            self,
+            "Warning!",
+            "Do you want to remove all your contacts?",
+            QMessageBox.StandardButton.Ok
+            | QMessageBox.StandardButton.Cancel,
+        )
+        
+        if messageBox == QMessageBox.StandardButton.Ok:
+            self.contactsModel.clearContacts()
+    
+    def deleteContact(self):
+        """Dele the selected contact from the database."""
+        row = self.table.currentIndex().row()
+        if row < 0:
+            return
+        
+        messageBox = QMessageBox.warning(
+            self,
+            "Warning!",
+            "Do you want to remove the selected contact?",
+            QMessageBox.StandardButton.Ok
+            | QMessageBox.StandardButton.Cancel,
+        )
+        
+        if messageBox == QMessageBox.StandardButton.Ok:
+            self.contactsModel.deleteContact(row)
+    
     def openAddDialog(self):
         """Open the Add Contact dialog."""
         dialog = AddDialog(self)
-        if dialog.exec() == QDialog.accepted:
-            print("Acepted Pressed.")
-            data = dialog.data
-            print(f"data in openAddDialog: {data}")
-            self.contactsModel.addContact(data)
+        if dialog.exec() == QDialog.DialogCode.Accepted:
+            self.contactsModel.addContacts(dialog.data)
             self.table.resizeColumnsToContents()
 
 class AddDialog(QDialog):
@@ -118,8 +147,5 @@ class AddDialog(QDialog):
         if not self.data:
             return
         
-        print(f"data in accept: {self.data}")
         super().accept()
 
-
-#
