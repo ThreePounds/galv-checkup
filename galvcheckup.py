@@ -1,4 +1,4 @@
-"""This module provides RP Contacts entry point script."""
+"""This module provides the entry point into the script."""
 
 from galvcheckup.main import main
 
